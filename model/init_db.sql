@@ -27,4 +27,23 @@ CREATE TABLE `users_pets`(
     FOREIGN KEY (petId) REFERENCES pets(id) ON DELETE CASCADE
 );
 
+INSERT INTO `users` (`id`, `username`, `email`, `password`)
+VALUES
+(1, 'user1', 'user1@gmail.com', '$2b$10$CIwX51lTg12RCs0/InOk7Oh9jRnA3XDfsAmF2RJUbLZG4qUrQflpe'),
+(2, 'user2', 'user2@gmail.com', '$2b$10$Vb.DwyghlKdtEpPLVbB71uGUYqI3BwPhDZNCgAsX6be6EnYPOIBoC'),
+(3, 'user3', 'user3@gmail.com', '$2b$10$9s0bDW6.BZ1SIlD1c/uTyuqSOaDLhY5iFlrwZJjENVJP9WjMnU3Wa');
 
+INSERT INTO `pets` (`id`, `name`, `picture`, `breed`)
+VALUES 
+(1, 'John', '1.jpg', 'Pit Bull Terrier'),
+(2, 'Lauren', '2.jpg', 'Black Mouth Cur'),
+(3, 'Bolt', '3.jpg', 'Pit Bull Terrier');
+
+INSERT INTO `users_pets` (`userId`, `petId`)
+VALUES 
+(1, 2),
+(1, 3),
+(2, 1),
+(2, 3),
+(3, 1),
+(3, 3);
