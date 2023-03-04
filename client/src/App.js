@@ -33,7 +33,7 @@ function App() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     };
-
+    
     let response = await fetch(OAUTH_URL, options);
     if (response.ok) {
       let data = await response.json();
@@ -66,7 +66,7 @@ function App() {
     }
     setLoading(false);
   }
-
+  console.log(results)
   return (
     //* Nav Bar
     <div className="App">
