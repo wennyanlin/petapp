@@ -10,7 +10,6 @@ export default function Result(props) {
     // once clicked on picture of the dog
     //it shows Featured page with more details
     let featProj = props.results.find((o) => o.id === id);
-    console.log(featProj);
     setFeatured(featProj);
   }
 
@@ -40,7 +39,7 @@ export default function Result(props) {
                 <div className="card-body">
                   <h3 className="card-title">{e.name}</h3>
                   <h6 className="card-text">{e.breeds.primary}</h6>
-                  <Link to={"/Register"} >🤍</Link>
+                  <Link to={"/Register"} className="likebtn">🤍</Link>
                 </div>
               </div>
             ))}

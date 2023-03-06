@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import "./App.css";
 import Result from "./components/Result";
 import Featured from "./components/Featured";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import { useEffect, createContext } from "react";
 import Form from "./components/Form";
 import { Button } from "react-bootstrap";
+import Dropdown from "react-bootstrap/Dropdown";
 import logo from "./logo.png";
 import RegisterForm from "./components/RegisterForm";
 import LoginForm from "./components/LoginForm";
+import Local from "./helpers/Local";
+import Api from "./helpers/Api";
 
 function App() {
   const [error, setError] = useState("");
@@ -19,6 +22,11 @@ function App() {
   //const CLIENT_ID = "HXrybFRPtRK41Nieti4Kj8t0Nzq2eD0zS5IUfSFbcqwMXE9qPC";
   //const CLIENT_SECRET = "CYTIwKHusDjEZyhlPDPsZLo7fHXrcCGBV9uw1ub6";
   const [loading, setLoading] = useState(false);
+
+  const [user, setUser] = useState(Local.getUser()); //why Local.getuser here but in the state is unly setUser?
+  const [LoginErrorMsg, setLoginErrorMsg] = useState("");
+  const navigate = useNavigate();
+
   useEffect(() => {
     getToken();
   }, []);
@@ -35,7 +43,7 @@ function App() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     };
-    
+
     let response = await fetch(OAUTH_URL, options);
     if (response.ok) {
       let data = await response.json();
@@ -68,45 +76,49 @@ function App() {
     }
     setLoading(false);
   }
-  console.log(results)
 
   const addUser = async (email, username, password) => {
     const options = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, username, password })
+      body: JSON.stringify({ email, username, password }),
     };
 
     try {
-      let response = await fetch('/auth/register', options);
+      let response = await fetch(
+        "http://localhost:5000/auth/register",
+        options
+      );
       if (response.ok) {
-        console.log('Success!')
+        console.log("Success!");
       } else {
-        setError("Failed to register, try again later.")
+        setError("Failed to register, try again later.");
       }
     } catch (err) {
       console.log(`Network error: ${err.message}`);
     }
-  }
+  };
 
   const loginUser = async (username, password) => {
-    const options ={
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password })
-    };
-
     try {
-      let response = await fetch('/auth/login', options);
-      if (response.ok) {
-        
+      let myresponse = await Api.loginUser(username, password);
+      if (myresponse.ok) {
+        Local.saveUserInfo(myresponse.data.token, myresponse.data.user);
+        setUser(myresponse.data.user);
+        navigate("/");
       } else {
-        
+        setLoginErrorMsg("Login failed");
       }
     } catch (err) {
       console.log(`Network error: ${err.message}`);
     }
-  }
+  };
+
+  const logoutUser = async () => {
+    Local.removeUserInfo();
+    setUser(null);
+    navigate("/");
+  };
 
   return (
     //* Nav Bar
@@ -120,6 +132,26 @@ function App() {
             <button>Pet Care</button>
             <button>Ways to support</button>
             <button>Contact us</button>
+            {user ? (
+              <Dropdown>
+                <Dropdown.Toggle id="dropdown-basic">
+                  {user.username}
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#/Favourite">Favourite pets</Dropdown.Item>
+                  <Dropdown.Divider />
+                  <Dropdown.Item href="/" onClick={logoutUser}>
+                    Logout
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            ): <div>
+            <Link to="/login">
+              <button>Login</button>
+            </Link>
+          </div>}
+            
           </nav>
         </div>
       </section>
@@ -132,8 +164,14 @@ function App() {
               path="/Featured/:id"
               element={<Featured results={results} />}
             ></Route>
-            <Route path="/Register" element={<RegisterForm addUser={addUser}/>}/>
-            <Route path="/login" element={<LoginForm loginUser={loginUser}/>}/>
+            <Route
+              path="/Register"
+              element={<RegisterForm addUser={addUser} />}
+            />
+            <Route
+              path="/login"
+              element={<LoginForm loginUser={loginUser} />}
+            />
             <Route />
           </Routes>
           {loading && (

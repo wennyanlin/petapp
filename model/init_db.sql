@@ -29,8 +29,11 @@ CREATE TABLE `users_pets`(
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`)
 VALUES
+-- pass: user12345
 (1, 'user1', 'user1@gmail.com', '$2b$10$CIwX51lTg12RCs0/InOk7Oh9jRnA3XDfsAmF2RJUbLZG4qUrQflpe'),
+-- pass: user23451
 (2, 'user2', 'user2@gmail.com', '$2b$10$Vb.DwyghlKdtEpPLVbB71uGUYqI3BwPhDZNCgAsX6be6EnYPOIBoC'),
+-- pass: user34512
 (3, 'user3', 'user3@gmail.com', '$2b$10$9s0bDW6.BZ1SIlD1c/uTyuqSOaDLhY5iFlrwZJjENVJP9WjMnU3Wa');
 
 INSERT INTO `pets` (`id`, `name`, `picture`, `breed`)
