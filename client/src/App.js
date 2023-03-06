@@ -7,6 +7,8 @@ import { useEffect, createContext } from "react";
 import Form from "./components/Form";
 import { Button } from "react-bootstrap";
 import logo from "./logo.png";
+import RegisterForm from "./components/RegisterForm";
+import LoginForm from "./components/LoginForm";
 
 function App() {
   const [error, setError] = useState("");
@@ -67,6 +69,45 @@ function App() {
     setLoading(false);
   }
   console.log(results)
+
+  const addUser = async (email, username, password) => {
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, username, password })
+    };
+
+    try {
+      let response = await fetch('/auth/register', options);
+      if (response.ok) {
+        console.log('Success!')
+      } else {
+        setError("Failed to register, try again later.")
+      }
+    } catch (err) {
+      console.log(`Network error: ${err.message}`);
+    }
+  }
+
+  const loginUser = async (username, password) => {
+    const options ={
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password })
+    };
+
+    try {
+      let response = await fetch('/auth/login', options);
+      if (response.ok) {
+        
+      } else {
+        
+      }
+    } catch (err) {
+      console.log(`Network error: ${err.message}`);
+    }
+  }
+
   return (
     //* Nav Bar
     <div className="App">
@@ -91,6 +132,9 @@ function App() {
               path="/Featured/:id"
               element={<Featured results={results} />}
             ></Route>
+            <Route path="/Register" element={<RegisterForm addUser={addUser}/>}/>
+            <Route path="/login" element={<LoginForm loginUser={loginUser}/>}/>
+            <Route />
           </Routes>
           {loading && (
             <div className="spinner-border text-dark" role="status">

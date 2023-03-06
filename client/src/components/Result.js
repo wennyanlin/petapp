@@ -40,6 +40,7 @@ export default function Result(props) {
                 <div className="card-body">
                   <h3 className="card-title">{e.name}</h3>
                   <h6 className="card-text">{e.breeds.primary}</h6>
+                  <Link to={"/Register"} >🤍</Link>
                 </div>
               </div>
             ))}

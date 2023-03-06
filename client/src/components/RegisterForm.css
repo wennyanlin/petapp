@@ -1,0 +1,49 @@
+.btn-group {
+  margin-top: 60px;
+  --bs-btn-hover-bg: #442705;
+}
+
+.btn-light {
+  --bs-btn-color: #442705;
+  --bs-btn-hover-bg: #442705;
+  --bs-btn-hover-border-color: #442705;
+  --bs-btn-hover-color: white;
+}
+
+.mb99 {
+  margin-top: 20px;
+}
+
+.form-label {
+  color: #442705;
+  font-weight: bold;
+}
+
+.input99 {
+  width: 260px;
+  margin: auto;
+}
+
+.btn-warning {
+  background-color: #442705;
+  border-color: #442705;
+  color: white;
+  --bs-btn-hover-bg: #442705;
+  --bs-btn-hover-color: white;
+  --bs-btn-hover-border-color: #ffad10;
+}
+
+.btn.active {
+  background-color: #442705;
+  border-color: #442705;
+  color: white;
+}
+
+.submitbtn99 {
+    margin-top: 8px;
+}
+
+a {
+    text-decoration: none;
+    font-size: xx-large;
+}
