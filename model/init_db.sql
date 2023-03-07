@@ -36,18 +36,3 @@ VALUES
 (2, 'user2', 'user2@gmail.com', '$2b$10$Vb.DwyghlKdtEpPLVbB71uGUYqI3BwPhDZNCgAsX6be6EnYPOIBoC'),
 -- pass: user34512
 (3, 'user3', 'user3@gmail.com', '$2b$10$9s0bDW6.BZ1SIlD1c/uTyuqSOaDLhY5iFlrwZJjENVJP9WjMnU3Wa');
-
-INSERT INTO `pets` (`petfinderId`, `name`, `photos`, `breed`)
-VALUES 
-(1, 'John', '1.jpg', 'Pit Bull Terrier'),
-(2, 'Lauren', '2.jpg', 'Black Mouth Cur'),
-(3, 'Bolt', '3.jpg', 'Pit Bull Terrier');
-
-INSERT INTO `users_pets` (`userId`, `petId`)
-VALUES 
-(1, 2),
-(1, 3),
-(2, 1),
-(2, 3),
-(3, 1),
-(3, 3);
