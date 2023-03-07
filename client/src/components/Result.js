@@ -55,7 +55,8 @@ export default function Result(props) {
                         addFavourite(
                           e.id,
                           e.name,
-                  {props.user ? <button className="likebtn" onClick={event => addFavourite(e.id, e.name, e.breed, e.photos)}>🤍</button> :(<Link to={"/Register"} className="likebtn">🤍</Link>)}
+                          e.breeds.primary,
+                          e.photos[0].large
                         )
                       }
                     >
