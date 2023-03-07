@@ -4,7 +4,7 @@ const db = require("../model/helper");
 
 const { ensureUserLoggedIn } = require(`../middleware/guard`);
 
-router.get("/favorites", ensureUserLoggedIn, async (req, res, next) => {
+router.get("/favourites", ensureUserLoggedIn, async (req, res, next) => {
   //we got the correct token after guard checked:
   const userId = res.locals.payload.userId;
 
@@ -21,36 +21,47 @@ router.get("/favorites", ensureUserLoggedIn, async (req, res, next) => {
   }
 });
 
-router.post("/favorites", ensureUserLoggedIn, async (req, res, next) => {
-  let { petId } = req.body;
+router.post("/favourites", ensureUserLoggedIn, async (req, res, next) => {
+  let { id, name, photos, breed } = req.body; //id = petfinderId it's alright
   const userId = res.locals.payload.userId;
 
   try {
     //users_pets table add petId, then return the updated table
-    const results = await db(
-      `INSERT INTO users_pets(userId, petId) VALUES (${userId}, ${petId})`
+    await db(
+      `INSERT INTO pets(petfinderId, name, photos, breed) VALUES (${id}, '${name}', '${photos}', '${breed}')`
     ); //added liked pet
-    res.send();
-  } catch (err) {
-    res.status(500).send(err);
-  }
-});
+    const results = await db(`SELECT id FROM pets ORDER BY id DESC LIMIT 1`);
+    const petId = results.data[0].id;
 
-router.delete("/favorites", ensureUserLoggedIn, async (req, res, next) => {
-  let { petId } = req.body;
-  const userId = res.locals.payload.userId;
-
-  try {
-    const deletePet = await db(
-      `DELETE FROM users_pets WHERE userId = ${userId} AND petId = ${petId}`
+    await db(
+      `INSERT INTO users_pets (userId, petId) VALUES (${userId}, ${petId})`
     );
-    const updatedResult = await db(
-      `SELECT p.* FROM pets AS p JOIN users_pets ON users_pets.petId = p.id WHERE users_pets.userId = ${userId}`
-    ); //get updated all liked pets
-    res.send(updatedResult.data);
+    res.status(201).send();
   } catch (err) {
     res.status(500).send(err);
   }
 });
+
+router.delete(
+  "/favourites/:petId",
+  ensureUserLoggedIn,
+  async (req, res, next) => {
+    let { petId } = req.params;
+
+    const userId = res.locals.payload.userId;
+
+    try {
+      const deletePet = await db(
+        `DELETE FROM users_pets WHERE userId = ${userId} AND petId = ${petId}`
+      );
+      const updatedResult = await db(
+        `SELECT p.* FROM pets AS p JOIN users_pets ON users_pets.petId = p.id WHERE users_pets.userId = ${userId}`
+      ); //get updated all liked pets
+      res.send(updatedResult.data);
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  }
+);
 
 module.exports = router;

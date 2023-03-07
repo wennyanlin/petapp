@@ -13,8 +13,9 @@ CREATE TABLE `users`(
 
 CREATE TABLE `pets`(
     `id` INT NOT NULL AUTO_INCREMENT,
+    `petfinderId` INT NOT NULL,
     `name` VARCHAR(255) NOT NULL,
-    `picture` VARCHAR(255) NOT NULL,
+    `photos` VARCHAR(255) NOT NULL,
     `breed` VARCHAR(255) NOT NULL,
     PRIMARY KEY (`id`)
 );
@@ -36,7 +37,7 @@ VALUES
 -- pass: user34512
 (3, 'user3', 'user3@gmail.com', '$2b$10$9s0bDW6.BZ1SIlD1c/uTyuqSOaDLhY5iFlrwZJjENVJP9WjMnU3Wa');
 
-INSERT INTO `pets` (`id`, `name`, `picture`, `breed`)
+INSERT INTO `pets` (`petfinderId`, `name`, `photos`, `breed`)
 VALUES 
 (1, 'John', '1.jpg', 'Pit Bull Terrier'),
 (2, 'Lauren', '2.jpg', 'Black Mouth Cur'),
