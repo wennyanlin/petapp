@@ -40,10 +40,12 @@
 }
 
 .submitbtn99 {
-    margin-top: 8px;
+  margin-top: 8px;
 }
 
 .likebtn {
-    text-decoration: none;
-    font-size: xx-large;
+  text-decoration: none;
+  font-size: xx-large;
+  background-color: transparent;
+  border-color: transparent;
 }

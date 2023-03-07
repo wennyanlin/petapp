@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import icon from "../icon2.png";
 import { Link } from "react-router-dom";
 import "./Result.css";
+import Api from "../helpers/Api";
 
 export default function Result(props) {
   const [featProject, setFeatured] = useState({});
@@ -12,6 +13,10 @@ export default function Result(props) {
     let featProj = props.results.find((o) => o.id === id);
     setFeatured(featProj);
   }
+
+  const addFavourite = (id, name, breed, photos) => {
+    Api.storeFavourite(id, name, breed, photos);
+  };
 
   return (
     <div className="resultsall">
@@ -39,7 +44,7 @@ export default function Result(props) {
                 <div className="card-body">
                   <h3 className="card-title">{e.name}</h3>
                   <h6 className="card-text">{e.breeds.primary}</h6>
-                  <Link to={"/Register"} className="likebtn">🤍</Link>
+                  {props.user ? <button className="likebtn" onClick={event => addFavourite(e.id, e.name, e.breed, e.photos)}>🤍</button> :(<Link to={"/Register"} className="likebtn">🤍</Link>)}
                 </div>
               </div>
             ))}

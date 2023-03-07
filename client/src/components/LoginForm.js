@@ -25,9 +25,9 @@ const LoginForm = (props) => {
     return (
         <div>
             <form onSubmit={handleSubmit} >
-                <div class="btn-group">
-                    <Link class="btn btn-light" type="button" to="/register"> Register</Link>
-                    <button class="btn btn-warning active" type="button">Login</button>
+                <div className="btn-group">
+                    <Link className="btn btn-light" type="button" to="/register"> Register</Link>
+                    <button className="btn btn-warning active" type="button">Login</button>
                 </div>
                 <div className="mb-3 mb99">
                 <label className="form-label">

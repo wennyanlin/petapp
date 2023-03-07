@@ -8,8 +8,10 @@ import Form from "./components/Form";
 import { Button } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
 import logo from "./logo.png";
+
 import RegisterForm from "./components/RegisterForm";
 import LoginForm from "./components/LoginForm";
+import FavouritePets from "./components/FavouritePets";
 import Local from "./helpers/Local";
 import Api from "./helpers/Api";
 
@@ -25,6 +27,7 @@ function App() {
 
   const [user, setUser] = useState(Local.getUser()); //why Local.getuser here but in the state is unly setUser?
   const [LoginErrorMsg, setLoginErrorMsg] = useState("");
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -85,10 +88,7 @@ function App() {
     };
 
     try {
-      let response = await fetch(
-        "http://localhost:5000/auth/register",
-        options
-      );
+      let response = await fetch("auth/register", options);
       if (response.ok) {
         console.log("Success!");
       } else {
@@ -120,13 +120,17 @@ function App() {
     navigate("/");
   };
 
+  
+
   return (
     //* Nav Bar
     <div className="App">
       <section>
         <div>
           <nav>
-            <img src={logo} alt="this is a logo" />
+            <a href="/">
+              <img src={logo} alt="this is a logo" />
+            </a>
             {/* These are fake buttons with no functionality */}
             <button>About us</button>
             <button>Pet Care</button>
@@ -137,21 +141,23 @@ function App() {
                 <Dropdown.Toggle id="dropdown-basic">
                   {user.username}
                 </Dropdown.Toggle>
-
                 <Dropdown.Menu>
-                  <Dropdown.Item href="#/Favourite">Favourite pets</Dropdown.Item>
+                  <Dropdown.Item href="/favourites">
+                    Favourite pets
+                  </Dropdown.Item>
                   <Dropdown.Divider />
                   <Dropdown.Item href="/" onClick={logoutUser}>
                     Logout
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-            ): <div>
-            <Link to="/login">
-              <button>Login</button>
-            </Link>
-          </div>}
-            
+            ) : (
+              <div>
+                <Link to="/login">
+                  <button>Login</button>
+                </Link>
+              </div>
+            )}
           </nav>
         </div>
       </section>
@@ -159,7 +165,15 @@ function App() {
         <div>
           <Routes>
             <Route path="/" element={<Form printPets={printPets} />} />
-            <Route path="/Result/*" element={<Result results={results} />} />
+            <Route
+              path="/Result/*"
+              element={
+                <Result
+                  results={results}
+                  user={user}
+                />
+              }
+            />
             <Route
               path="/Featured/:id"
               element={<Featured results={results} />}
@@ -172,7 +186,7 @@ function App() {
               path="/login"
               element={<LoginForm loginUser={loginUser} />}
             />
-            <Route />
+            <Route path="/favourites" element={<FavouritePets />} />
           </Routes>
           {loading && (
             <div className="spinner-border text-dark" role="status">
