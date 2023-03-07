@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 
-app.use("/pets", petsRouter);
-app.use("/auth", authRouter);
+app.use("/api/pets", petsRouter);
+app.use("/api/auth", authRouter);
 
 module.exports = app;
