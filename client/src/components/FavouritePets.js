@@ -5,13 +5,11 @@ import Api from "../helpers/Api";
 
 const FavouritePets = (props) => {
 
-  const { favouritePets, setFavouritePets} = props
+  const { favouritePets, setFavouritePets, getAllFavouritePets } = props
 
+  
   useEffect(() => {
-    const getAllFavouritePets = async () => {
-      let results = await Api.getAllFavourite();
-      setFavouritePets(results.data);
-    };
+    
 
     getAllFavouritePets();
   }, []);

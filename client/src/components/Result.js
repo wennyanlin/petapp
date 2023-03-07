@@ -6,7 +6,7 @@ import Api from "../helpers/Api";
 
 export default function Result(props) {
   const [featProject, setFeatured] = useState({});
-  const { favouritePets, setFavouritePets } = props;
+  const { favouritePets, getAllFavouritePets } = props;
 
   function showPet(id) {
     // once clicked on picture of the dog
@@ -18,7 +18,7 @@ export default function Result(props) {
   const addFavourite = async (id, name, breed, photos) => {
     if (!favouritePets.includes((pet) => pet.id === id)) {
       let results = await Api.storeFavourite(id, name, breed, photos);
-      setFavouritePets(results.data);
+      getAllFavouritePets();
     }
   };
 

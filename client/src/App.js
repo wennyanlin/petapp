@@ -120,7 +120,10 @@ function App() {
     navigate("/");
   };
 
-  
+  const getAllFavouritePets = async () => {
+    let results = await Api.getAllFavourite();
+    setFavouritePets(results.data);
+  };
 
   return (
     //* Nav Bar
@@ -172,7 +175,7 @@ function App() {
                   results={results}
                   user={user}
                   favouritePets={favouritePets}
-                  setFavouritePets={setFavouritePets}
+                  getAllFavouritePets={getAllFavouritePets}
                 />
               }
             />
@@ -188,7 +191,16 @@ function App() {
               path="/login"
               element={<LoginForm loginUser={loginUser} />}
             />
-            <Route path="/favourites" element={<FavouritePets favouritePets={favouritePets} setFavouritePets={setFavouritePets}/>} />
+            <Route
+              path="/favourites"
+              element={
+                <FavouritePets
+                  favouritePets={favouritePets}
+                  setFavouritePets={setFavouritePets}
+                  getAllFavouritePets={getAllFavouritePets}
+                />
+              }
+            />
           </Routes>
           {loading && (
             <div className="spinner-border text-dark" role="status">
