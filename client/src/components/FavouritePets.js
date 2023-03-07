@@ -22,7 +22,7 @@ const FavouritePets = (props) => {
   }
 
   return (
-    <div>
+    <div className="allgrids">
       {favouritePets.map((e) => (
         <div key={e.id} className="card" style={{ width: "18rem" }}>
           <div>
