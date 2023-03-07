@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import icon from "../icon2.png";
 import Api from "../helpers/Api";
 
-const FavouritePets = () => {
+const FavouritePets = (props) => {
 
-  const [favouritePets, setFavouritePets] = useState([]);
+  const { favouritePets, setFavouritePets} = props
 
   useEffect(() => {
     const getAllFavouritePets = async () => {

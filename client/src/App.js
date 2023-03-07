@@ -27,7 +27,7 @@ function App() {
 
   const [user, setUser] = useState(Local.getUser()); //why Local.getuser here but in the state is unly setUser?
   const [LoginErrorMsg, setLoginErrorMsg] = useState("");
-
+  const [favouritePets, setFavouritePets] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -171,6 +171,8 @@ function App() {
                 <Result
                   results={results}
                   user={user}
+                  favouritePets={favouritePets}
+                  setFavouritePets={setFavouritePets}
                 />
               }
             />
@@ -186,7 +188,7 @@ function App() {
               path="/login"
               element={<LoginForm loginUser={loginUser} />}
             />
-            <Route path="/favourites" element={<FavouritePets />} />
+            <Route path="/favourites" element={<FavouritePets favouritePets={favouritePets} setFavouritePets={setFavouritePets}/>} />
           </Routes>
           {loading && (
             <div className="spinner-border text-dark" role="status">

@@ -6,6 +6,7 @@ import Api from "../helpers/Api";
 
 export default function Result(props) {
   const [featProject, setFeatured] = useState({});
+  const { favouritePets, setFavouritePets } = props;
 
   function showPet(id) {
     // once clicked on picture of the dog
@@ -14,8 +15,11 @@ export default function Result(props) {
     setFeatured(featProj);
   }
 
-  const addFavourite = (id, name, breed, photos) => {
-    Api.storeFavourite(id, name, breed, photos);
+  const addFavourite = async (id, name, breed, photos) => {
+    if (!favouritePets.includes((pet) => pet.id === id)) {
+      let results = await Api.storeFavourite(id, name, breed, photos);
+      setFavouritePets(results.data);
+    }
   };
 
   return (
@@ -44,7 +48,24 @@ export default function Result(props) {
                 <div className="card-body">
                   <h3 className="card-title">{e.name}</h3>
                   <h6 className="card-text">{e.breeds.primary}</h6>
+                  {props.user ? (
+                    <button
+                      className="likebtn"
+                      onClick={(event) =>
+                        addFavourite(
+                          e.id,
+                          e.name,
                   {props.user ? <button className="likebtn" onClick={event => addFavourite(e.id, e.name, e.breed, e.photos)}>🤍</button> :(<Link to={"/Register"} className="likebtn">🤍</Link>)}
+                        )
+                      }
+                    >
+                      🤍
+                    </button>
+                  ) : (
+                    <Link to={"/Register"} className="likebtn">
+                      🤍
+                    </Link>
+                  )}
                 </div>
               </div>
             ))}
