@@ -20,7 +20,7 @@ class Api {
   static async loginUser(username, password) {
     let body = { username, password };
 
-    return await this._doFetch("auth/login", "POST", body);
+    return await this._doFetch("/auth/login", "POST", body);
   }
 
   /**
@@ -57,9 +57,8 @@ class Api {
     return await this._doFetch("/pets/favourites", "POST", body);
   }
 
-  static async deleteFavourite (id) {
-
-    return await this._doFetch(`/pets/favourites/${id}`, "DELETE")
+  static async deleteFavourite(id) {
+    return await this._doFetch(`/pets/favourites/${id}`, "DELETE");
   }
 
   static async getAllFavourite() {

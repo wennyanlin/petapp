@@ -88,8 +88,9 @@ function App() {
     };
 
     try {
-      let response = await fetch("auth/register", options);
+      let response = await fetch("/api/auth/register", options);
       if (response.ok) {
+        navigate("/");
         console.log("Success!");
       } else {
         setError("Failed to register, try again later.");
